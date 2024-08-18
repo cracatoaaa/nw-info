@@ -44,7 +44,6 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model('User', UserSchema);
 
 app.use(express.json());
-app.use(express.static('public'));
 
 let domainList = [];
 
@@ -229,26 +228,6 @@ app.delete('/delete-domain', authenticate, async (req, res) => {
   user.singleDomainUrls = user.singleDomainUrls.filter(url => url.domain !== domain);
   await user.save();
   res.status(200).send('Domain deleted');
-});
-
-// Serve the index.html file
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Serve the bulk.html file
-app.get('/bulk', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'bulk.html'));
-});
-
-// Serve the login.html file
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-// Serve the register.html file
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'register.html'));
 });
 
 app.listen(PORT, () => {
