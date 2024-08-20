@@ -7,6 +7,7 @@ const axios = require('axios');
 const path = require('path');
 const { Telegraf } = require('telegraf');
 const asyncLock = require('async-lock');
+const cors = require('cors');
 
 const app = express();
 const lock = new asyncLock();
@@ -18,6 +19,12 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
+
+app.use(cors({
+  origin: 'https://watapak.com', // Ganti dengan domain Anda
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true
+}));
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
